@@ -8,6 +8,7 @@ namespace SampleSSOClient1.Models
     public class Constants
     {
         public const string BaseAddress = "https://localhost:44333/core";
+        ////public const string BaseAddress = "http://localhost:35542/core";
         ////public const string BaseAddress = "https://localhost/Host/core";
 
         public const string AuthorizeEndpoint = BaseAddress + "/connect/authorize";
