@@ -10,8 +10,8 @@ namespace SampleSSOServer4
 
     using Owin;
 
-    using SampleSSOServer4.Config;
-    using SampleSSOServer4.IdentityServer;
+    using Config;
+    using IdentityServer;
 
     using Thinktecture.IdentityServer.Core.Configuration;
 
