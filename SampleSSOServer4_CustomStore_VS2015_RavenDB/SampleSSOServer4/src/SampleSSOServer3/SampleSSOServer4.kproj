@@ -18,7 +18,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <DevelopmentServerPort>35542</DevelopmentServerPort>
     <CommandLineArguments />
-    <DebugTarget />
+    <DebugTarget>
+    </DebugTarget>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <ProduceOutputsOnBuild>False</ProduceOutputsOnBuild>
