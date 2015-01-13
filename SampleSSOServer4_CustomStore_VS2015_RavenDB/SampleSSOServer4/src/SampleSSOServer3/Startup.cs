@@ -3,9 +3,7 @@ namespace SampleSSOServer4
 {
     using Microsoft.AspNet.Builder;
     using Microsoft.AspNet.Hosting;
-    using Microsoft.AspNet.Mvc;
     using Microsoft.Framework.ConfigurationModel;
-    using Microsoft.Framework.DependencyInjection;
     using Microsoft.Owin.Security.OpenIdConnect;
 
     using Owin;
@@ -30,12 +28,16 @@ namespace SampleSSOServer4
         public void Configure(IApplicationBuilder app)
         {
             // For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
+            var requireSsl = true;
 
-            app.Map("/core", coreApp =>
-            {
-                var idsrvOptions = new IdentityServerOptions
+            #if DEBUG
+                        requireSsl = false;
+            #endif
+            ////app.Map("/core", coreApp =>
+            ////{
+            var idsrvOptions = new IdentityServerOptions
                 {
-                    IssuerUri = "https://idsrv3.com",
+                    IssuerUri = "https://aqdev01/identityserversamplewithaspvnext",
                     SiteName = "Sample SSO Server with custom user store",
                     Factory = Factory.Configure(),
                     SigningCertificate = Certificate.GetCertificate(),
@@ -52,23 +54,23 @@ namespace SampleSSOServer4
                         IdentityProviders = ConfigureIdentityProviders,
                     },
 
-                    RequireSsl = false
-                };
+                    RequireSsl = requireSsl
+            };
 
-                coreApp.UseIdentityServer(idsrvOptions);
-            });
+            app.UseIdentityServer(idsrvOptions);
+            ////});
 
-            app.UseServices(
-                services =>
-                    {
-                        services.AddMvc(Configuration);
+            ////app.UseServices(
+            ////    services =>
+            ////        {
+            ////            services.AddMvc(Configuration);
 
-                        services.Configure<MvcOptions>(
-                            options =>
-                                {
-                                    options.Filters.Add(new RequireHttpsAttribute());
-                                });
-                    });
+            ////            services.Configure<MvcOptions>(
+            ////                options =>
+            ////                    {
+            ////                        options.Filters.Add(new RequireHttpsAttribute());
+            ////                    });
+            ////        });
 
             app.UseStaticFiles();
 
@@ -129,9 +131,11 @@ namespace SampleSSOServer4
                 Caption = "Azure AD",
                 SignInAsAuthenticationType = signInAsType,
 
-                Authority = "https://login.windows.net/4ca9cb4c-5e5f-4be9-b700-c532992a3705",
+                ////Authority = "https://login.windows.net/4ca9cb4c-5e5f-4be9-b700-c532992a3705",
+                Authority = "https://aqdev01:35543/identityserversamplewithaspvnext",
                 ClientId = "65bbbda8-8b85-4c9d-81e9-1502330aacba",
-                RedirectUri = "https://localhost:44333/core/aadcb",
+                ////RedirectUri = "https://localhost:44333/core/aadcb",
+                RedirectUri = "https://aqdev01:35543/identityserversamplewithaspvnext/aadcb"
             };
 
             app.UseOpenIdConnectAuthentication(aad);

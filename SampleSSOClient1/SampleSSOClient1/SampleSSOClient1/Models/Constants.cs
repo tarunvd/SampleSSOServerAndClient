@@ -7,9 +7,16 @@ namespace SampleSSOClient1.Models
 {
     public class Constants
     {
-        public const string BaseAddress = "https://localhost:44333/core";
-        ////public const string BaseAddress = "http://localhost:35542/core";
+        ////public const string BaseAddress = "https://localhost:44333/core";
+        ////public const string BaseAddress = "https://localhost:35542/core";
+        public const string BaseAddress = "http://localhost:35542";
+        ////public const string BaseAddress = "https://localhost:35543/IdentityServerSampleWithAspvNext/core";
+        ////public const string BaseAddress = "https://aqdev01:35544/core";
+        ////public const string BaseAddress = "https://aqdev01:35543/identityserversamplewithaspvnext/core";
+        ////public const string BaseAddress = "https://aqdev01/identityserversamplewithaspvnext";
+        ////public const string BaseAddress = "https://localhost:35544//core";
         ////public const string BaseAddress = "https://localhost/Host/core";
+        //// public const string BaseAddress = "http://localhost:35542";
 
         public const string AuthorizeEndpoint = BaseAddress + "/connect/authorize";
         public const string LogoutEndpoint = BaseAddress + "/connect/endsession";
