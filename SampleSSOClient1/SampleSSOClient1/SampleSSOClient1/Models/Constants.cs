@@ -9,7 +9,12 @@ namespace SampleSSOClient1.Models
     {
         ////public const string BaseAddress = "https://localhost:44333/core";
         ////public const string BaseAddress = "https://localhost:35542/core";
-        public const string BaseAddress = "http://localhost:35542";
+         public const string BaseAddress = "https://empactisidentityuat.azurewebsites.net";
+        //// public const string BaseAddress = "http://localhost:39544";
+         ////public const string BaseAddress = "https://localhost:44304";
+
+        ////public const string BaseAddress = "http://localhost:17343";
+        ////public const string BaseAddress = "http://localhost:35542";
         ////public const string BaseAddress = "https://localhost:35543/IdentityServerSampleWithAspvNext/core";
         ////public const string BaseAddress = "https://aqdev01:35544/core";
         ////public const string BaseAddress = "https://aqdev01:35543/identityserversamplewithaspvnext/core";

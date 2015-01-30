@@ -29,12 +29,12 @@ namespace SampleSSOClient1
 
             app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
             {
-                ClientId = "SSOClient1",
+                ClientId = "empactisidentitytestclient",
                 Authority = Constants.BaseAddress,
-                RedirectUri = "http://localhost:12007/",
-                PostLogoutRedirectUri = "http://localhost:12007/",
+                RedirectUri = "http://empactisidentitytestclient.azurewebsites.net",
+                PostLogoutRedirectUri = "http://empactisidentitytestclient.azurewebsites.net",
                 ResponseType = "id_token",
-                Scope = "openid profile roles",
+                Scope = "openid all_claims",
 
                 SignInAsAuthenticationType = "Cookies",
                 UseTokenLifetime = false,
@@ -42,24 +42,27 @@ namespace SampleSSOClient1
                 {
                     SecurityTokenValidated = async n =>
                     {
-                        var id = n.AuthenticationTicket.Identity;
+                        var identity = n.AuthenticationTicket.Identity;
 
-                        var fullName = id.FindFirst(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Name);
-                        var sub = id.FindFirst(Constants.ClaimTypes.Subject);
-                        var roles = id.FindAll(Constants.ClaimTypes.Role);
+                        var fullName = identity.FindFirst(Thinktecture.IdentityServer.Core.Constants.ClaimTypes.Name);
+                        var id = identity.FindFirst(Constants.ClaimTypes.Id);
+                        var roles = identity.FindAll(Constants.ClaimTypes.Role);
 
                         // create new identity and set name and role claim type
-                        var nid = new ClaimsIdentity(
-                            id.AuthenticationType,
+                        var nid = new ClaimsIdentity(identity.AuthenticationType,
                             Constants.ClaimTypes.Name,
                             Constants.ClaimTypes.Role);
 
                         // keep the id_token for logout
                         nid.AddClaim(new Claim("id_token", n.ProtocolMessage.IdToken));
 
+                        nid.AddClaim(id);
                         nid.AddClaim(fullName);
-                        nid.AddClaim(sub);
-                        nid.AddClaims(roles);
+
+                        if (roles != null)
+                        {
+                            nid.AddClaims(roles);
+                        }
 
                         n.AuthenticationTicket = new AuthenticationTicket(nid, n.AuthenticationTicket.Properties);
                     },
@@ -69,7 +72,7 @@ namespace SampleSSOClient1
                         {
                             var idTokenHint = n.OwinContext.Authentication.User.FindFirst("id_token").Value;
                             n.ProtocolMessage.IdTokenHint = idTokenHint;
-                            n.ProtocolMessage.ClientId = "SSOClient1";
+                            n.ProtocolMessage.ClientId = "empactisidentitytestclient";
                         }
                     }
                 }
